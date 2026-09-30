@@ -55,7 +55,7 @@ const createOrder = async (req, res) => {
 };
 
 const VALID_STATUS = ['Pending', 'Sent', 'Received', 'Cancelled'];
-const isPending = order.status === 'Pending';
+
 
 const updateOrder = async (req, res) => {
 	const { id } = req.params;
@@ -72,6 +72,8 @@ const updateOrder = async (req, res) => {
 		if (!order) {
 			return res.status(404).json({ error: 'Order not found' });
         }
+        
+        const isPending = order.status === 'Pending';
 
         if (status === 'Cancelled' && !isPending) {
 			return res.status(400).json({ error: "Cannot cancel orders with a status other than 'Pending'" });

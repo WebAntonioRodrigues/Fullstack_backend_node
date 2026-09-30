@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const orderController = require('../controllers/orderController');
-const { authenticateToken, isAdmin, isEmployee } = require('../midlewares/authMiddleware');
+const { authenticateToken, isAdmin, isEmployee } = require('../middlewares/authMiddleware');
 
 router.get("/api/order", authenticateToken, isEmployee, orderController.getAllOrders);
 router.get("/api/order/:id", authenticateToken, isEmployee, orderController.getOrderDetail);
