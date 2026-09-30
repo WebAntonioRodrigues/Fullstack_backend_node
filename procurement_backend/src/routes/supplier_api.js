@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const orderController = require('../controllers/supplierController');
-const { authenticateToken, isAdmin, isEmployee } = require('../middlewares/authMiddleware');
+const supplierController = require('../controllers/supplierController');
+const { authenticateToken, isAdmin, hasRole } = require('../middlewares/authMiddleware');
 
-router.get("/api/supplier", authenticateToken, isEmployee, orderController.getAllSuppliers);
-router.get("/api/supplier/:id", authenticateToken, isEmployee, orderController.getSupplierDetail);
+router.get('/api/suppliers', authenticateToken, hasRole('admin', 'employee'), supplierController.getAllSuppliers);
+router.get('/api/suppliers/:id', authenticateToken, hasRole('admin', 'employee'), supplierController.getSupplierDetail);
 
-router.post("/api/supplier", authenticateToken, isAdmin, orderController.createSupplier);
-router.put("api/supplier/:id", authenticateToken, isAdmin, orderController.updateSupplier);
+router.post('/api/suppliers', authenticateToken, isAdmin, supplierController.createSupplier);
+router.put('/api/suppliers/:id', authenticateToken, isAdmin, supplierController.updateSupplier);
 
 module.exports = router;
